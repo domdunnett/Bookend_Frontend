@@ -5,7 +5,10 @@ body{
 
 textarea {
   resize: none;
+	padding-bottom: 0.5em;
+  padding-top: 0.5em;
 }
+
 .favourite-star {
 	font-size: 2em;
 	vertical-align: middle;
@@ -39,6 +42,41 @@ i {
 	color: darkblue;
 }
 
+#account-panel {
+	padding: 0.3em;
+	border-radius: 1em;
+}
 
+#account-panel-break {
+	text-align: center;
+}
 
+input {
+	margin-bottom: 0.5em;
+}
+
+.container-fluid {
+	border: none;
+}
+
+.navbar-brand:hover, #navbar-collapse > ul > li > a:hover {
+	border-bottom: 2px solid darkblue;
+}
+
+.navbar-default.navbar-static-top {
+	border-bottom-color: darkblue;
+  border-bottom-width: 1px;
+}
+
+#sign-in-form {
+	padding: 1em;
+}
+
+#sign-up-form {
+	padding: 1em;
+}
+
+#characters-remaining {
+	padding: 1em;
+}
 

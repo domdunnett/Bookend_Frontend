@@ -19,16 +19,18 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-book"></span></a>
-					
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse">
+					
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">About</a></li>
+            <li><a href="#" type="button" data-toggle="modal" data-target=".sign-in-modal">Log In</a></li>
+            <li><a href="#" type="button" data-toggle="modal" data-target=".sign-up-modal">Sign Up</a></li>
             <li><a href="#">Contact</a></li>
             <li><a href="#" id="signout">Log Out</a></li>
           </ul>
+					
         </div><!-- /.navbar-collapse -->
 				
       </div>
@@ -40,8 +42,39 @@
 				<h1>Welcome to Bookend.</h1>
 				<p>Share your reading experience with the World.</p>		
 			</div>
+
+			<div class="modal fade sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<form class="container-fluid" id="sign-in-form">
+								<label>Username:</label>
+								<input autocomplete='on' type="username" class="form-control" id="signin-username" placeholder="Username...">
+								<label>Password:</label>
+								<input type="password" class="form-control" id="signin-password" placeholder="Password...">
+								<button class="btn btn-primary" id="signup" type="submit">Sign In</button>
+						</form>
+					</div>
+				</div>
+			</div>
 			
-			<div class="panel panel-default col-xs-12 col-sm-offset-3 col-sm-3">
+			<div class="modal fade sign-up-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<form class="container-fluid" id="sign-up-form">
+								<label>Username:</label>
+								<input autocomplete='on' type="username" class="form-control" id="username" placeholder="Username...">
+								<label>Email:</label>
+								<input autocomplete='on' type="email" class="form-control" id="email" placeholder="Email...">
+								<label>Password:</label>
+								<input type="password" class="form-control" id="password" placeholder="Password...">
+								<button class="btn btn-success" id="signup" type="submit">Sign Up</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+<!--
+			<div class="panel panel-default col-xs-12 col-sm-offset-9 col-sm-3" id="account-panel">
 				<form class="container-fluid" id="sign-up-form">
 						<label>Username:</label>
 						<input autocomplete='on' type="username" class="form-control" id="username" placeholder="Username...">
@@ -51,9 +84,7 @@
 						<input type="password" class="form-control" id="password" placeholder="Password...">
 						<button class="btn btn-success" id="signup" type="submit">Sign Up</button>
 				</form>
-			</div>
-			
-			<div class="panel panel-default col-xs-12 col-sm-3">
+				<p id="account-panel-break">Or...</p>
 				<form class="container-fluid" id="sign-in-form">
 						<label>Username:</label>
 						<input autocomplete='on' type="username" class="form-control" id="signin-username" placeholder="Username...">
@@ -62,6 +93,7 @@
 						<button class="btn btn-primary" id="signup" type="submit">Sign In</button>
 				</form>
 			</div>
+-->
 
 
 		</div>

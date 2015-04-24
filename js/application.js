@@ -111,7 +111,7 @@ $(document).ready(function() {
 		
 		console.log(book);
 		
-		addToFavourites(book, listUsersFavouriteBooks());
+		addToFavourites(book, listUsersFavouriteBooks);
 		
 	});
 		

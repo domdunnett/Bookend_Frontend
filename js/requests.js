@@ -29,7 +29,7 @@ function listAll() {
 			text += '<li class="list-group-item">';
 			text +=		'<div class="container-fluid">';
 			text +=			'<div class="col-xs-10">';
-			text +=				'<h4><strong class="title">' + response[i].book.title + '</strong> by <strong class="author">' + response[i].book.author + '</strong></h4>';
+			text +=				'<h4><strong class="title">' + response[i]["book-title"] + '</strong> by <strong class="author">' + response[i]["book-author"] + '</strong></h4>';
 			text +=				'<p>' + response[i].message + '</p>';
 			text +=				'<p>Review by <em>\/' + response[i].username + '</em></p>';
 			text +=				'<div>' + numberOfStars(response[i].rating) + '</div>';
@@ -226,7 +226,7 @@ function searchReviews(searchInput) {
 			text += '<li class="list-group-item">';
 			text +=		'<div class="container-fluid">';
 			text +=			'<div class="col-xs-10">';
-			text +=				'<h4><strong class="title">' + response[i].book.title + '</strong> by <strong class="author">' + response[i].book.author + '</strong></h4>';
+			text +=				'<h4><strong class="title">' + response[i]["book-title"] + '</strong> by <strong class="author">' + response[i]["book-author"] + '</strong></h4>';
 			text +=				'<p>' + response[i].message + '</p>';
 			text +=				'<p>Review by <em>\/' + response[i].username + '</em></p>';
 			text +=				'<div>' + numberOfStars(response[i].rating) + '</div>';
@@ -300,7 +300,7 @@ function signOut() {
 
 // ------------------------------------------------- Update user favourites
 
-function addToFavourites(book) {
+function addToFavourites(book, callback) {
 	
 	var userRequest = new Request();
 	userRequest.type = 'PUT';
@@ -308,6 +308,7 @@ function addToFavourites(book) {
 	userRequest.data = { book: book };
 	userRequest.success = function(response) {
 		console.log(response);
+		callback();
 	}
 	
 	console.log(userRequest);
