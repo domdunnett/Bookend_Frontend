@@ -21,21 +21,95 @@ function listAll() {
 	allreviewsRequest.type = 'GET';
 	allreviewsRequest.url += '/reviews';
 	allreviewsRequest.success = function(response) {
+		
+		$('#all-reviews').html('');
+		
 		for(var i = 0; i < response.length; i++) {
 			var text= '';
-			text += '<li>' + response[i].tweet + '</li>';
-			text += '<li class="tweet-user"><em>' + response[i].user + '</em></li>';
+			text += '<li class="list-group-item">';
+			text +=		'<div class="container-fluid">';
+			text +=			'<div class="col-xs-10">';
+			text +=				'<h4><strong class="title">' + response[i].book.title + '</strong> by <strong class="author">' + response[i].book.author + '</strong></h4>';
+			text +=				'<p>' + response[i].message + '</p>';
+			text +=				'<p>Review by <em>\/' + response[i].username + '</em></p>';
+			text +=				'<div>' + numberOfStars(response[i].rating) + '</div>';
+			text +=			'</div>';
+			text +=			'<div class="col-xs-2 star-div">';
+			text +=				'<div id=' + response[i]._id + '><span class="glyphicon glyphicon-star-empty favourite-star"></span></div>';
+			text +=			'</div>';
+			text +=		'</div>';
+			text +=	'</li>';
 
 			$('#all-reviews').append(text);
 		}
 	};
 	allreviewsRequest.error = function(response) {
-		$('#all-reviews').append('<li>' + response.responseText + '</li>');
+		$('#all-reviews').append('<li class="list-group-item">' + response + '</li>');
 	};
-
-
+	
 	$.ajax(allreviewsRequest);
 
+}
+
+// ------------------------------------------------- List user favourite reviews
+
+function listUsersFavouriteBooks() {
+	
+	var favouritesRequest = new Request();
+	favouritesRequest.type = 'GET';
+	favouritesRequest.url += '/user';
+	favouritesRequest.success = function(response) {
+		
+		var text= '';
+		
+		console.log(response);
+		
+		$.each(response, function(index, book) {
+			
+			$('#favourite-books').html('');
+
+			if(book) {
+				text += '<li class="list-group-item">';
+				text +=		'<h4><strong class="title">' + book.title + '</strong> by '
+				text +=		'<strong class="author">' + book.author + '</strong></h4>';
+				text +=	'</li>';
+			}
+			
+		});
+		
+		console.log(text);
+	
+		if(text === undefined) {
+			$('#favourite-books').html('');
+		} 
+		else {
+			$('#favourite-books').append(text);
+		}
+		
+	};
+	favouritesRequest.error = function(response) {
+		$('#favourite-books').append('<li class="list-group-item">' + response + '</li>');
+	};
+	
+	$.ajax(favouritesRequest);
+	
+}
+
+
+// ------------------------------------------------- Return Text to add Star Rating
+
+function numberOfStars(rating) {
+	
+	var ratingString = '';
+	
+	for(var i = 0; i < rating; i++) {
+		
+		ratingString += '<span class="glyphicon glyphicon-star review-star"></span>'
+		
+	}
+	
+	return ratingString;
+	
 }
 
 // ------------------------------------------------- Get all user reviews
@@ -84,16 +158,18 @@ function signIn(usernameInput, passwordInput) {
 	signInRequest.type = 'POST';
 	signInRequest.url += '/sessions';
 	signInRequest.data = dataPackage;
+	console.log(dataPackage);
 	signInRequest.success = function(response) {
 
 		console.log(response);
-		getUserreviews(usernameInput);
+		
+		window.location = '/profile_page.html';
 
 	};
 	signInRequest.error = function(response) {
 
 		console.log(response);
-
+		
 	};
 
 
@@ -122,7 +198,7 @@ function signUp(usernameInput, emailInput, passwordInput) {
 
 		signIn(usernameInput, passwordInput);
 
-		window.location.href = 'http://127.0.0.1:56359/profile_page.html';
+		window.location = '/profile_page.html';
 
 	}
 
@@ -142,25 +218,31 @@ function searchReviews(searchInput) {
 	searchRequest.type = 'GET';
 	searchRequest.url += '/reviews/search/' + searchInput;
 	searchRequest.success = function(response) {
-		console.log(response);
+		
+		$('#all-reviews').html('');
+		
+		for(var i = 0; i < response.length; i++) {
+			var text= '';
+			text += '<li class="list-group-item">';
+			text +=		'<div class="container-fluid">';
+			text +=			'<div class="col-xs-10">';
+			text +=				'<h4><strong class="title">' + response[i].book.title + '</strong> by <strong class="author">' + response[i].book.author + '</strong></h4>';
+			text +=				'<p>' + response[i].message + '</p>';
+			text +=				'<p>Review by <em>\/' + response[i].username + '</em></p>';
+			text +=				'<div>' + numberOfStars(response[i].rating) + '</div>';
+			text +=			'</div>';
+			text +=			'<div class="col-xs-2 star-div">';
+			text +=				'<div id=' + response[i]._id + '><span class="glyphicon glyphicon-star-empty favourite-star"></span></div>';
+			text +=			'</div>';
+			text +=		'</div>';
+			text +=	'</li>';
 
-//		if(response.length) {
-//			$('#all-reviews').html('');
-//			for(var i = 0; i < response.length; i++) {
-//				var text= '';
-//				text += '<li>' + response[i].tweet + '</li>';
-//				text += '<li class="tweet-user"><em>' + response[i].user + '</em></li>';
-//
-//				$('#all-reviews').append(text);
-//
-//			}
-//		}
-//		else {
-//			$('#all-reviews').html('');
-//			$('#all-reviews').append("No reviews found.");
-//		}
+			$('#all-reviews').append(text);
+			
+		}
+		
+		console.log(response);
 	}
-	console.log(searchRequest);
 
 	$.ajax(searchRequest);
 
@@ -168,13 +250,17 @@ function searchReviews(searchInput) {
 
 // ------------------------------------------------- Post a Review
 
-function postReview(reviewInput) {
+function postReview(reviewInput, bookTitle, bookAuthor, userRating) {
 
 	var newReviewRequest = new Request();
 	var dataPackage = {
 		review: {
 			message: reviewInput,
-			// more data needed
+			book: {
+				title: bookTitle,
+				author: bookAuthor
+			},
+			rating: userRating
 		}
 	};
 
@@ -197,11 +283,35 @@ function signOut() {
 
 	var signOutRequest = new Request();
 	signOutRequest.type = 'DELETE';
-	signOutRequest.url = '/sessions';
+	signOutRequest.url += '/sessions';
 	signOutRequest.success = function(response) {
 		console.log(response);
+		window.location = '/index.html';
 	};
+	signOutRequest.error = function(response) {
+		console.log(response);
+	};
+	
+	console.log(signOutRequest);
 
 	$.ajax(signOutRequest);
 
+}
+
+// ------------------------------------------------- Update user favourites
+
+function addToFavourites(book) {
+	
+	var userRequest = new Request();
+	userRequest.type = 'PUT';
+	userRequest.url += '/users/edit';
+	userRequest.data = { book: book };
+	userRequest.success = function(response) {
+		console.log(response);
+	}
+	
+	console.log(userRequest);
+	
+	$.ajax(userRequest);
+	
 }

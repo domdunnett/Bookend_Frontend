@@ -1,9 +1,24 @@
 $(document).ready(function() {
 	
+	// ------------------------------------------------- Post Review Animation
+	
+	function postReviewAnimate() {
+		
+		$('#review-input').val('');
+		$('#title').val('');
+		$('#author').val('');
+		
+		$('#input-panel').hide(1000, function() {
+			$('#input-panel').show(1000);	
+		});
+		
+	}
 	
 	// ------------------------------------------------- Sign Up Request
 	
-	$('#signup').on('click', function() {
+	$('#sign-up-form').submit(function(event) {
+		
+		event.preventDefault();
 		
 		var usernameInput = $('#username').val();
 		var emailInput = $('#email').val();
@@ -15,7 +30,9 @@ $(document).ready(function() {
 	
 	// ------------------------------------------------- Sign In Request
 	
-	$('#signin').on('click', function() {
+	$('#sign-in-form').submit(function(event) {
+		
+		event.preventDefault();
 		
 		var usernameInput = $('#signin-username').val();
 		var passwordInput = $('#signin-password').val();
@@ -26,9 +43,9 @@ $(document).ready(function() {
 	
 	// ------------------------------------------------- Search Reviews
 	
-	$('#user-search').on('keyup', function() {
+	$('#review-search').on('keyup', function() {
 		
-		var searchInput = $('#user-search').val();
+		var searchInput = $('#review-search').val();
 		
 		if(!searchInput) {
 			$('#all-reviews').html('');
@@ -44,8 +61,15 @@ $(document).ready(function() {
 	$('#new-review').on('click', function() {
 
 		var reviewInput = $('#review-input').val();
+		var bookTitle = $('#title').val();
+		var bookAuthor = $('#author').val();
+		var rating = $('#rating').val();
 		
-		postReview(reviewInput);
+		postReviewAnimate();
+		
+		postReview(reviewInput, bookTitle, bookAuthor, rating);
+		
+		listAll();
 
 	});
 	
@@ -76,6 +100,22 @@ $(document).ready(function() {
 		location.reload();
 		
 	});
+	
+	// ------------------------------------------------- Favourite Button
+	
+	$(document).on('click', '.star-div', function() {
+
+		var favouriteTitle = $(this).parent().find('.title').html();
+		var favouriteAuthor = $(this).parent().find('.author').html();
+		var book = { title: favouriteTitle, author: favouriteAuthor };
+		
+		console.log(book);
+		
+		addToFavourites(book, listUsersFavouriteBooks());
+		
+	});
+		
+		
 		
 	
 

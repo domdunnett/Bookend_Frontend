@@ -1,0 +1,44 @@
+body{
+	font-family: 'Goudy Bookletter 1911', serif;
+	color: darkblue;
+}
+
+textarea {
+  resize: none;
+}
+.favourite-star {
+	font-size: 2em;
+	vertical-align: middle;
+}
+
+.favourite-star:hover {
+	font-size: 3em;
+	color: darkgoldenrod;
+}
+
+.review-star:click {
+	font-size: 3em;
+	color: red;
+}
+
+.glyphicon-star {
+	color: darkgoldenrod;
+}
+
+i {
+	font-size: 1.5em;
+}
+
+#main-content {
+	background-image: url('http://parade.com/wp-content/uploads/2014/05/summer-reading-ftr.jpg');
+	background-size: cover;
+}
+
+.navbar, .glyphicon-book, #navbar-collapse > ul > li > a {
+	background-color: white;
+	color: darkblue;
+}
+
+
+
+
