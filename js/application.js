@@ -24,7 +24,7 @@ $(document).ready(function() {
 		var emailInput = $('#email').val();
 		var passwordInput = $('#password').val();
 		
-		signUp(usernameInput, emailInput, passwordInput);
+		signUp(usernameInput, emailInput, passwordInput, signIn);
 
 	});
 	
@@ -48,7 +48,7 @@ $(document).ready(function() {
 		var searchInput = $('#review-search').val();
 		
 		if(!searchInput) {
-			$('#all-reviews').html('');
+			$('#allf-reviews').html('');
 			listAll();
 		}
 		
@@ -67,9 +67,7 @@ $(document).ready(function() {
 		
 		postReviewAnimate();
 		
-		postReview(reviewInput, bookTitle, bookAuthor, rating);
-		
-		listAll();
+		postReview(reviewInput, bookTitle, bookAuthor, rating, listAll);
 
 	});
 	
@@ -84,7 +82,7 @@ $(document).ready(function() {
 	
 	// ------------------------------------------------- Characters Remaining Function
 									 
-	$('#tweet-input').on('keyup', function() {
+	$('#review-input').on('keyup', function() {
 		
 		var currentCharacters = $(this).val().length;
 		var remainingCharacters = 140 - currentCharacters;
@@ -114,9 +112,5 @@ $(document).ready(function() {
 		addToFavourites(book, listUsersFavouriteBooks);
 		
 	});
-		
-		
-		
-	
 
 });

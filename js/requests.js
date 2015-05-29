@@ -4,7 +4,7 @@
 function Request() {
 
 	this.type = '';
-	this.url = 'http://localhost:8000';
+	this.url = 'https://bookend-api.herokuapp.com';
 	this.data = {};
 	this.xhrFields = { withCredentials: true };
 	this.dataType = 'json';
@@ -180,7 +180,7 @@ function signIn(usernameInput, passwordInput) {
 
 // ------------------------------------------------- Sign Up
 
-function signUp(usernameInput, emailInput, passwordInput) {
+function signUp(usernameInput, emailInput, passwordInput, callback) {
 
 	var signUpRequest = new Request();
 	var dataPackage = {
@@ -196,9 +196,7 @@ function signUp(usernameInput, emailInput, passwordInput) {
 	signUpRequest.data = dataPackage;
 	signUpRequest.success = function(response) {
 
-		signIn(usernameInput, passwordInput);
-
-		window.location = '/profile_page.html';
+		callback(usernameInput, passwordInput);
 
 	}
 
@@ -250,16 +248,14 @@ function searchReviews(searchInput) {
 
 // ------------------------------------------------- Post a Review
 
-function postReview(reviewInput, bookTitle, bookAuthor, userRating) {
+function postReview(reviewInput, bookTitle, bookAuthor, userRating, callback) {
 
 	var newReviewRequest = new Request();
 	var dataPackage = {
 		review: {
 			message: reviewInput,
-			book: {
-				title: bookTitle,
-				author: bookAuthor
-			},
+			'book-title': bookTitle,
+			'book-author': bookAuthor,
 			rating: userRating
 		}
 	};
@@ -270,6 +266,7 @@ function postReview(reviewInput, bookTitle, bookAuthor, userRating) {
 	newReviewRequest.success = function(response) {
 		console.log(dataPackage);
 		console.log(response);
+		callback();
 	};
 
 
