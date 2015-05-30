@@ -163,7 +163,10 @@ function signIn(usernameInput, passwordInput) {
 
 		console.log(response);
 		
-		window.location = '/profile_page.html';
+		if (response.authenticated == true) {
+      window.location = '/profile_page.html';
+    }
+      
 
 	};
 	signInRequest.error = function(response) {
