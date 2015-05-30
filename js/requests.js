@@ -59,36 +59,41 @@ function listUsersFavouriteBooks() {
 	favouritesRequest.type = 'GET';
 	favouritesRequest.url += '/user';
 	favouritesRequest.success = function(response) {
+    
+    console.log(response);
 		
 		var text= '';
-		
-		console.log(response);
-		
-		$.each(response, function(index, book) {
-			
-			$('#favourite-books').html('');
+    
+    $('#favourite-books').html('');
+    
+    if(response === undefined) {
+      
+      text += '<li class="list-group-item">';
+      text +=		'<p>You have no favourites yet.</p>';
+      text +=	'</li>';
+      
+    }
+    else {
+      
+      $.each(response, function(index, book) {
 
-			if(book) {
-				text += '<li class="list-group-item">';
-				text +=		'<h4><strong class="title">' + book.title + '</strong> by '
-				text +=		'<strong class="author">' + book.author + '</strong></h4>';
-				text +=	'</li>';
-			}
-			
-		});
-		
-		console.log(text);
+
+        text += '<li class="list-group-item">';
+        text +=		'<h4><strong class="title">' + book.title + '</strong> by '
+        text +=		'<strong class="author">' + book.author + '</strong></h4>';
+        text +=	'</li>';
+
+      });
+      
+    }
+    console.log(text);
 	
-		if(text === undefined) {
-			$('#favourite-books').html('');
-		} 
-		else {
-			$('#favourite-books').append(text);
-		}
+    $('#favourite-books').append(text);
 		
 	};
+  
 	favouritesRequest.error = function(response) {
-		$('#favourite-books').append('<li class="list-group-item">' + response + '</li>');
+		$('#favourite-books').append('<li class="list-group-item"><p>You have no favourites yet.</p></li>');
 	};
 	
 	$.ajax(favouritesRequest);
@@ -163,7 +168,7 @@ function signIn(usernameInput, passwordInput) {
 
 		console.log(response);
 		
-		if (response.authenticated == true) {
+		if ((response.authenticated == true) || (response.ok == true))  {
       window.location = '/profile_page.html';
     }
       
